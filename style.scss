@@ -1,0 +1,138 @@
+@import 'https://fonts.googleapis.com/css?family=Bree+Serif|Merriweather|Roboto+Slab';
+
+$offwhite: #EEE8D6;
+$darkblue: #022933;
+$yellow: #ffba00;
+$blue:  #0076a3;
+$green: #548c27;
+$orange:  #f39856;
+$red: #ea6153;
+$purple:  #6d73c2;
+$gray: #e2e2e2;
+$brown: #332920;
+
+$font-main: 'Roboto Slab', Helvetica, sans-serif;
+$font-markdown: 'Bree Serif', Helvetica, sans-serif;
+$font-table: 1.9rem;
+
+$color-backgrounds: $offwhite;
+$color-even-cells: #f6f6f6;
+$color-odd-cells: #e9e9e9;
+$color-headlines: $red, $orange, $blue, $green, $yellow, $purple;
+
+// LOOP through the $color-headlines and assign to matching 'h' selector
+@for $item from 1 through length($color-headlines) {
+  h#{$item} {
+    color: nth($color-headlines, $item);  // grab the nth item (defined by $item) from 'color-headlines'
+  }
+}
+
+body {
+	font-family: $font-main;
+	background-color: $offwhite;
+}
+h1.title {
+	color: $offwhite;
+	font-size: 40px;
+	margin-left:10px;
+	margin-bottom: 0;
+}
+p {
+	font-size: $font-table;
+}
+a {
+	// color: $blue;
+}
+a:hover {
+	text-decoration: none;
+	// color: lighten($blue, .5);
+}
+#header {
+	background-color: $red;		
+	border-bottom: 1px solid $offwhite;
+	padding: 2px 0px 15px 10px;
+}
+#number_label, .number_results {
+	width:5%;
+	text-align: center;
+}
+#camper_label, .camper_results {
+	width:45%;
+	text-align: left;
+}
+#recent_label, .recent_results {
+	width:25%;
+	text-align: center
+}
+#alltime_label {
+	width:25%;
+	text-align: center;
+}
+.recent_results, .alltime_results {
+	position: relative;
+	top: 7px;
+}
+.btn {
+	color: $offwhite;
+	font-size: $font-table;
+}
+.btn-primary {
+	// border-color: $offwhite;
+}
+.btn-primary:hover, .btn-primary:active, .btn-focus {
+    border-color: $offwhite !important;
+}
+.imagethumbnail {
+	width:40px;
+	max-height:40px;
+	border:1px solid $gray;
+	border-radius: 6px;
+	margin-right: 10px;
+}
+.container{
+	margin-top: 20px;
+}
+
+.table {
+	border: 1px solid $blue;
+	font-family: Helvetica;
+  font-size: 1.9rem;
+	color: $blue;
+  text-align: left;
+  width: 100%;
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr {
+			background-color: $color-odd-cells;			
+				&:hover {
+					background-color: darken($color-odd-cells, 2.5);
+			}
+
+      &:nth-child(even) {
+        background-color: $color-even-cells;
+
+        &:hover {
+          background-color: darken($color-even-cells, 2.3);
+        }
+      }
+
+      > th,
+      > td {
+        padding: 10px;
+        border-bottom: 1px dotted $blue;
+      }
+    }
+  }
+
+  >thead >tr {
+		background-color: $blue !important;
+    color: $color-backgrounds;
+    &:hover {
+      background-color: $blue; 
+    }
+    >th {
+      border-bottom: 0;
+    }
+  }
+}
