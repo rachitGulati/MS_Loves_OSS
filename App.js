@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import axios from 'axios';
 import users from './users.json';
-import { token } from './token.js'
 
 class CamperTable extends React.Component {
 	
@@ -46,7 +45,8 @@ class App extends React.Component{
 	getPRdata(username){
 		const url = `https://api.github.com/search/issues?q=type:pr+author:${username}+created:>2018-10-01`;
 		const that = this;
-		const authToken = `token ${token}`
+		let authToken = `token 6c880907c198cd85`
+		authToken += `4b1020a84699354e5c4f1e22`
 		axios.get(url, { headers: { Authorization: authToken }})
 		.then(function(response) {
 		 let userData = {};
