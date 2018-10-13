@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import axios from 'axios';
 import users from '!../users.json';
+import Loader from './loader';
 
 class CamperTable extends React.Component {
 	
@@ -39,8 +40,9 @@ class App extends React.Component{
 		super();
 		this.getPRdata = this.getPRdata.bind(this);
     this.state = { 
-      campers: []
-		}
+	  campers: [],
+	  loading: true
+	}
   }	
 	
 	getPRdata(username){
@@ -56,7 +58,8 @@ class App extends React.Component{
 		 let campers = that.state.campers;
 		 campers.push(userData);
 		 that.setState({
-			 campers: campers
+			 campers: campers,
+			 loading: false
 		 })
 		});
 	}
@@ -100,8 +103,9 @@ class App extends React.Component{
 												<th id="recent_label"> Pull Requests </th>
 												</tr>
 								</thead>
-								<CamperTable campers={this.state.campers} />
+		{ this.state.loading ? '' : <CamperTable campers={this.state.campers} /> }
 						</table>	
+						{ this.state.loading ? <div className="col-lg-12 Loader__Body"> <Loader /> </div>:  ''}
 					</div>
 				</div>
 			</div>
