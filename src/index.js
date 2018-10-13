@@ -1,7 +1,8 @@
+import style from "./style.scss";
 import React from 'react';
 import ReactDom from 'react-dom';
 import axios from 'axios';
-import users from './users.json';
+import users from '!../users.json';
 
 class CamperTable extends React.Component {
 	
