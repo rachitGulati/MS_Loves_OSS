@@ -69,7 +69,9 @@ a:hover {
   max-height: 40px;
   border: 1px solid #e2e2e2;
   border-radius: 6px;
-  margin-right: 10px;
+	margin-right: 10px;
+	position: relative;
+	top: 10px;
 }
 .container {
   margin-top: 20px;
