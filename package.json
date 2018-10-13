@@ -14,12 +14,12 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": " npm run build && npm run lint-staged"
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
-    "*.{js,json,css,md}": ["prettier --write", "git add"],
-    "ignore": ["docs/***/**"]
+    "src/**/*.{js,css,html}": ["prettier --write", "npm run build", "git add"],
+    "docs/**/*.{js,css,html}": ["git add"]
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

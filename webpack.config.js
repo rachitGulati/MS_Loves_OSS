@@ -10,7 +10,7 @@ const htmlWebpackPlugin = new HtmlWebPackPlugin({
 module.exports = (env, options) => {
   console.log("WEBPACK ENV", options.mode);
   return {
-    devtool: "source-map",
+    devtool:  options.mode === "prodcition"? '' : "source-map",
     output: {
       publicPath: options.mode === "prodcition" ? "./" : "",
       path: path.resolve("docs"),
