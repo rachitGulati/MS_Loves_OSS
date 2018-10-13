@@ -12,6 +12,15 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": " npm run build && npm run lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,css,md}": ["prettier --write", "git add"],
+    "ignore": ["docs/***/**"]
+  },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
