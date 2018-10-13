@@ -18,8 +18,7 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{js,css,html}": ["prettier --write", "npm run build", "git add"],
-    "docs/**/*.{js,css,html}": ["git add"]
+    "src/**/*.{js,css,html}": ["prettier --write", "npm run build", "git add ."]
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
