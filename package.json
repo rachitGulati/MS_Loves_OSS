@@ -5,6 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "axios": "^0.18.0",
+    "husky": "^1.1.2",
+    "lint-staged": "^7.3.0",
     "lodash": "^4.17.11",
     "parcel-bundler": "^1.10.2",
     "react": "^16.5.2",
@@ -19,6 +21,7 @@
     "css-loader": "^1.0.0",
     "html-webpack-plugin": "^3.2.0",
     "json-loader": "^0.5.7",
+    "prettier": "^1.14.3",
     "sass": "^1.14.1",
     "style-loader": "^0.23.1",
     "webpack": "^4.20.2",

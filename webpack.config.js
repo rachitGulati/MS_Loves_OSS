@@ -1,7 +1,6 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const path = require('path');
-const env = process.env.NODE_ENV
-
+const path = require("path");
+const env = process.env.NODE_ENV;
 
 const htmlWebpackPlugin = new HtmlWebPackPlugin({
   template: "./src/index.html",
@@ -11,16 +10,17 @@ const htmlWebpackPlugin = new HtmlWebPackPlugin({
 module.exports = (env, options) => {
   console.log("WEBPACK ENV", options.mode);
   return {
-    devtool: 'source-map',
+    devtool: "source-map",
     output: {
-        publicPath: options.mode === 'prodcition' ? './' : '',
-        path: path.resolve('docs'),
-        filename: 'bundled.js'
+      publicPath: options.mode === "prodcition" ? "./" : "",
+      path: path.resolve("docs"),
+      filename: "bundled.js"
     },
     module: {
       rules: [
-        { test: /\.json$/, 
-          loaders: ['json-loader']
+        {
+          test: /\.json$/,
+          loaders: ["json-loader"]
         },
         {
           test: /\.js$/,
@@ -36,5 +36,5 @@ module.exports = (env, options) => {
       ]
     },
     plugins: [htmlWebpackPlugin]
-  }
+  };
 };
