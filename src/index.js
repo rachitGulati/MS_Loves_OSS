@@ -8,11 +8,11 @@ import Loader from "./loader";
 import _ from "lodash";
 
 class CamperTable extends React.Component {
-  renderList() {
+  renderList(campers) {
     var count = 0;
     const githubUrl = "https://github.com/";
 
-    return this.props.campers.map(camper => {
+    return campers.map(camper => {
       count++;
       return (
         <tr id="results" key={camper.username}>
@@ -33,7 +33,8 @@ class CamperTable extends React.Component {
     });
   }
   render() {
-    return <tbody>{this.renderList()}</tbody>;
+    const campers = _.orderBy(this.props.campers, ["prCount"], ["desc"]);
+    return <tbody>{this.renderList(campers)}</tbody>;
   }
 }
 
