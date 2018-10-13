@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import axios from 'axios';
+import users from './users.json';
 
 class CamperTable extends React.Component {
 	
 	renderList() {
 		var count = 0;
-		var fccUrl = 'https://www.freecodecamp.com/';
+		const githubUrl = "https://github.com/";
 		
 		return this.props.campers.map( (camper) => {
 			count++
@@ -14,12 +15,11 @@ class CamperTable extends React.Component {
 				<tr id="results" key={camper.username}>
 					<td className="number_results">{count}</td>
 					<td className="camper_results">
-						<a href={fccUrl + camper.username}>
+						<a href={githubUrl+ camper.username} target="_blank" style={{ textDecoration: 'none' }}>
 							<img src={camper.img} className="imagethumbnail"/>{camper.username}
 						</a>
 					</td>
-					<td className="recent_results">{camper.recent}</td>
-					<td className="recent_results">{camper.alltime}</td>             
+					<td className="recent_results">{camper.prCount}</td>           
 				</tr> 
 			)			
 		})
@@ -35,24 +35,42 @@ class CamperTable extends React.Component {
 
 class App extends React.Component{
   constructor() {
-    super();
+		super();
+		this.getPRdata = this.getPRdata.bind(this);
     this.state = { 
       campers: []
-    }
+		}
   }	
 	
-	fetchData (duration) {
-		var url = "https://fcctop100.herokuapp.com/api/fccusers/top/" + duration;
-		return axios.get(url)
-			.then(function(response) {
-				var campers = response.data;
-				this.setState({campers:campers})
-				}.bind(this));		
+	getPRdata(username){
+		const url = `https://api.github.com/search/issues?q=type:pr+author:${username}+created:>2018-10-01`;
+		const that = this;
+		let authToken = `token 6c880907c198cd85`
+		authToken += `4b1020a84699354e5c4f1e22`
+		axios.get(url, { headers: { Authorization: authToken }})
+		.then(function(response) {
+		 let userData = {};
+		 userData.username = username;
+		 userData.prCount = response.data.total_count;
+		 let campers = that.state.campers;
+		 campers.push(userData);
+		 that.setState({
+			 campers: campers
+		 })
+		});
+	}
+
+	fetchUsernames () {
+			const usernames = Object.keys(users);
+			usernames.map( (username) => {
+				this.getPRdata(username);
+			})
 	}
 	
 	componentDidMount () { // first time Component loads
-		this.fetchData("recent");
+		this.fetchUsernames();
 	}
+
 	daysLeft(){
         const oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
         const firstDate = new Date();
@@ -62,7 +80,6 @@ class App extends React.Component{
         return diffDays;
     }
 	render () {
-       
 		return (
 			<div>
         <div className="row">
