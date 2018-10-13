@@ -1,5 +1,5 @@
 {
-  "name": "Microsoft_Love_OSS",
+  "name": "Microsoft-Love-OSS",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -18,7 +18,7 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{js,css,html}": ["prettier --write", "npm run build", "git add ."]
+    "src/**/*.{js,css}": ["prettier --write", "npm run build", "git add", "git add docs"]
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
