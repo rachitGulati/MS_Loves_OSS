@@ -64,18 +64,20 @@ class App extends React.Component {
       "data.items[0].user.avatar_url",
       "https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Penguin-512.png"
     );
-    let campers = that.state.campers;
-    campers.push(userData);
-    that.setState({
-      campers: campers,
-      loading: false
-    });
+    return userData;
   }
 
-  fetchUsernames() {
+  async fetchUsernames() {
     const usernames = Object.keys(users);
+    const finalUsersPromise = [];
     usernames.map(username => {
-      this.getPRdata(username);
+      finalUsersPromise.push(this.getPRdata(username));
+    });
+    const finalUsers = await Promise.all(finalUsersPromise);
+    console.log(finalUsers);
+    this.setState({
+      users: finalUsers,
+      loading: false
     });
   }
 
@@ -123,7 +125,7 @@ class App extends React.Component {
               {this.state.loading ? (
                 ""
               ) : (
-                <CamperTable campers={this.state.campers} />
+                <CamperTable campers={this.state.users} />
               )}
             </table>
             {this.state.loading ? (
