@@ -7,6 +7,18 @@ import users from "!../users.json";
 import Loader from "./loader";
 import _ from "lodash";
 
+function formatDate(date) {
+  var d = new Date(date),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+
+  return [year, month, day].join("-");
+}
+
 class CamperTable extends React.Component {
   renderList(campers) {
     var count = 0;
@@ -49,18 +61,27 @@ class App extends React.Component {
   }
 
   async getPRdata(username) {
-    const url = `https://api.github.com/search/issues?q=type:pr+author:${username}+created:>2018-10-01`;
-    const that = this;
-    let authToken = `token 6c880907c198cd85`;
-    authToken += `4b1020a84699354e5c4f1e22`;
-    const userResponse = await axios.get(url, {
+    const date = new Date();
+    const firstDate = formatDate(date);
+    const lastDate = formatDate(
+      new Date(date.getFullYear(), date.getMonth() + 1, 0)
+    );
+    const url = `https://api.github.com/search/issues?q=type:pr+author:${username}+created:`;
+    let authToken = `token 66a4478485ec7978eb11e`;
+    authToken += `9258f1f09b9e2532ec1`;
+    const tillTheStartOfThisMonth = await axios.get(`${url}<${firstDate}`, {
+      headers: { Authorization: authToken }
+    });
+    const tillTheEndOfThisMonth = await axios.get(`${url}<${lastDate}`, {
       headers: { Authorization: authToken }
     });
     let userData = {};
     userData.username = username;
-    userData.prCount = _.get(userResponse, "data.total_count", "N/A");
+    userData.prCount =
+      _.get(tillTheEndOfThisMonth, "data.total_count", "N/A") -
+      _.get(tillTheStartOfThisMonth, "data.total_count", "N/A");
     userData.img = _.get(
-      userResponse,
+      tillTheEndOfThisMonth,
       "data.items[0].user.avatar_url",
       "https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Penguin-512.png"
     );
@@ -86,16 +107,40 @@ class App extends React.Component {
     this.fetchUsernames();
   }
 
+  currentMonth() {
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
+    const date = new Date();
+    return months[date.getMonth()];
+  }
+
   daysLeft() {
     const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
     const firstDate = new Date();
-    const secondDate = new Date("2018-10-31");
+    const lastDate = new Date(
+      firstDate.getFullYear(),
+      firstDate.getMonth() + 1,
+      0
+    );
 
     const diffDays = Math.round(
-      Math.abs((firstDate.getTime() - secondDate.getTime()) / oneDay)
+      Math.abs((firstDate.getTime() - lastDate.getTime()) / oneDay)
     );
     return diffDays;
   }
+
   render() {
     return (
       <div>
@@ -106,7 +151,8 @@ class App extends React.Component {
                 Leaderboard{" "}
                 <span style={{ marginRight: 20, float: "right" }}>
                   {" "}
-                  {this.daysLeft()} days remaining!{" "}
+                  {this.daysLeft()} days remaining in {this.currentMonth()}
+                  {` !!`}
                 </span>
               </h1>
             </div>
