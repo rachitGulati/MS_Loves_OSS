@@ -62,7 +62,9 @@ class App extends React.Component {
 
   async getPRdata(username) {
     const date = new Date();
-    const firstDate = formatDate(date);
+    const firstDate = formatDate(
+      new Date(date.getFullYear(), date.getMonth(), 1)
+    );
     const lastDate = formatDate(
       new Date(date.getFullYear(), date.getMonth() + 1, 0)
     );
@@ -95,7 +97,6 @@ class App extends React.Component {
       finalUsersPromise.push(this.getPRdata(username));
     });
     const finalUsers = await Promise.all(finalUsersPromise);
-    console.log(finalUsers);
     this.setState({
       users: finalUsers,
       loading: false
