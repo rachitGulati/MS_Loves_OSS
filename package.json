@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "husky": "^1.1.2",
     "lint-staged": "^7.3.0",
     "lodash": "^4.17.11",
