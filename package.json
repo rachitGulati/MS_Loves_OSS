@@ -27,7 +27,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^1.0.0",
-    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "^5.5.0",
     "json-loader": "^0.5.7",
     "prettier": "^1.14.3",
     "sass": "^1.14.1",
